@@ -55,8 +55,8 @@ public class PopularJFrogArtifact {
 	        while ((output = br.readLine()) != null) {
 	                sb.append(output + "\n");
 	        }
-	        statObj = new JSONObject(sb.toString());
 	        synchronized (lock) {
+	        statObj = new JSONObject(sb.toString());
 	        	return new AbstractMap.SimpleEntry<Integer, String>(statObj.getInt("downloadCount"), pathName);
 	        }
 		}
@@ -136,14 +136,21 @@ public class PopularJFrogArtifact {
 
 	//Main Method
 	public static void main(String[] args) throws Exception {
-		Instant start = Instant.now();
 		
-		getArtifacts("jcenter-cache");
-		//getArtifacts("gradle-release-local");
-		
-		Instant end = Instant.now();
-		Duration timeElapsed = Duration.between(start, end);
-		System.out.println("Time taken: "+ timeElapsed.toMillis() +" milliseconds");
+		if (args.length > 0) {
+			Instant start = Instant.now();
+						
+			getArtifacts(args[0]);
+			//getArtifacts("jcenter-cache");
+			//getArtifacts("gradle-release-local");
+			
+			Instant end = Instant.now();
+			Duration timeElapsed = Duration.between(start, end);
+			System.out.println("Time taken: "+ timeElapsed.toMillis() +" milliseconds");
+		}else {
+			System.err.println("Please pass the repo name, e.g: jfrog.PopularJFrogArtifact jcenter-cache");
+			System.exit(1);
+		}
 
 	}
 
@@ -177,5 +184,4 @@ public class PopularJFrogArtifact {
 	private static String pathName(String repoName, JSONObject obj) {
 		return repoName+"/"+obj.get("path")+"/"+obj.get("name");
 	}
-
 }
