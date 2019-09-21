@@ -55,8 +55,8 @@ public class PopularJFrogArtifact {
 	        while ((output = br.readLine()) != null) {
 	                sb.append(output + "\n");
 	        }
+        	statObj = new JSONObject(sb.toString());
 	        synchronized (lock) {
-	        statObj = new JSONObject(sb.toString());
 	        	return new AbstractMap.SimpleEntry<Integer, String>(statObj.getInt("downloadCount"), pathName);
 	        }
 		}
