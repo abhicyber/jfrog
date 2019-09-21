@@ -1,5 +1,8 @@
 apply plugin: 'java'
-  
+apply plugin: 'application'
+
+mainClassName = "jfrog.PopularJFrogArtifact"
+
 repositories {
     mavenCentral()
 }
